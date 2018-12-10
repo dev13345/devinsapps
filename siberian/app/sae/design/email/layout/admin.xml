@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout>
+
+    <create_account>
+        <addLayout name="application_base_layout" />
+        <views>
+            <content_email class="core_view_email_default"
+                           template="admin/account/create.phtml" />
+        </views>
+    </create_account>
+
+    <create_for_owner>
+        <addLayout name="application_base_layout" />
+        <views>
+            <content_email class="core_view_email_default" template="admin/account/create-for-owner.phtml" />
+        </views>
+    </create_for_owner>
+
+    <forgot_password>
+        <addLayout name="application_base_layout" />
+        <views>
+            <content_email class="core_view_email_default" template="admin/account/forgotpassword.phtml" />
+        </views>
+    </forgot_password>
+
+</layout>

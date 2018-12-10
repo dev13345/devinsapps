@@ -1,0 +1,229 @@
+<?php
+$option_value = $this->getOptionValue();
+$section_id = $this->getSectionId();
+$field = $this->getField();
+if (!$field) {
+    $field = new Form_Model_Field();
+}
+
+$type_icons = array(
+    '<i class="icon-file-text-alt"></i>' => "fa-file-text-o",
+    '<i class="icon-file-text"></i>' => "fa-file-text",
+    '<i class="icon-time"></i>' => "fa-clock-o",
+    '<i class="icon-map-marker"></i>' => "fa-map",
+    '<i class="icon-check-sign"></i>' => "fa-check-square-o",
+    '<i class="icon-circle-blank"></i>' => "fa-circle-o",
+    '<i class="icon-collapse"></i>' => "fa-caret-square-o-down",
+    '<i class="icon-picture"></i>' => "fa-file-picture-o"
+);
+?>
+<div id="create_field"
+     class="field">
+    <div>
+        <h3 class="title-editor border-blue text-center no-border-radius">
+            <?php echo ($field->getId() ? __('Edit field %s', $field->getName()) : __('Create a new field')) ?>
+        </h3>
+        <div class="container-fluid form-scroll">
+            <form action="<?php echo $this->getUrl('form/application_field/editpost'); ?>"
+                  method="POST"
+                  id="fieldFormSimple"
+                  class="form-horizontal">
+                <input type="hidden"
+                       name="option_value_id"
+                       value="<?php echo $option_value ?>" />
+                <input type="hidden"
+                       name="section_id"
+                       value="<?php echo $section_id ?>" />
+                <?php if ($field->getId()) : ?>
+                    <input type="hidden"
+                           name="field_id"
+                           value="<?php echo $field->getId() ?>" />
+                <?php endif; ?>
+                <div class="form-group first-row-feature">
+                    <div class="col-md-12">
+                        <button type="button"
+                                id="hide_form"
+                                class="btn pull-left color-blue"
+                                onclick="field.cancel();">
+                            <i class="fa fa-angle-left"></i>
+                        </button>
+                        <button type="submit"
+                                class="btn pull-right color-blue"><?php echo __('OK'); ?></button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <label for="field_name"><?php echo __('Field name:'); ?></label>
+                    </div>
+                    <div class="col-md-5">
+                        <input class="name required input-flat"
+                               type="text"
+                               id="field_name"
+                               name="name" <?php echo ($field->getId() ? 'value="' . $field->getName() . '"' : 'placeholder="' . __('Field name') . '"') ?>/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <label for="field_required">
+                            <input type="checkbox"
+                                   id="field_required"
+                                   value="1"
+                                   name="required" <?php echo ($field->getRequired() == 1 ? 'checked' : '') ?>
+                                   class="color-blue checkbox-inline"/>
+                            <?php echo __('This field is required'); ?>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <label><?php echo __('Choose a field type:'); ?></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div id="typeFieldError"
+                         style="display:none"
+                         class="col-md-12 error">
+                        <?php echo __('You have to choose a field type.'); ?>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div id="choose_type">
+                            <ul class="choose_type list-group">
+                                <?php $type = new Form_Model_Field(); ?>
+                                <?php $types = $type->getTypes(); ?>
+                                <?php foreach($types as $type) : ?>
+                                <li id="field_<?php echo $type->getType(); ?>"
+                                    class="list-group-item pull-left text-center pointer <?php if($field->getType() == $type->getType()) : ?> active<?php endif; ?>"
+                                    title="<?php echo $type->getLabel(); ?>"
+                                    <?php if(!$field->getId()) : ?> onclick="field.setType('<?php echo $type->getType(); ?>');"<?php endif; ?>>
+                                    <p>
+                                        <?php echo ($type->getIcon() != "123" AND $type->getIcon() != "@") ? "<i class='fa ".$type_icons[$type->getIcon()]."'></i>" : $type->getIcon(); ?>
+                                    </p>
+                                </li>
+                                <?php endforeach; ?>
+                            </ul>
+                            <input type="hidden"
+                                   name="type"
+                                   id="typeField"
+                                   value="<?php echo ($field ? $field->getType() : '') ?>"
+                                   class="required" />
+                        </div>
+                    </div>
+                </div>
+
+                <div id="options"
+                     class="manage_options" <?php if(!in_array($field->getType(), array('checkbox', 'radio', 'select'))) : ?>
+                    style="display:none"<?php endif; ?>>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <?php echo __('Manage options:'); ?>
+                        </div>
+                    </div>
+                    <div id="optionList">
+                        <?php
+                        $options = [];
+                        if ($field->getId()) {
+                            $options = $field->getOption();
+                        }
+                        if (!empty($options)) :
+                            $options = explode(';', $options);
+                            foreach ($options as $key => $option) :
+                                ?>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <input type="text"
+                                               id="option<?php echo $key ?>"
+                                               name="option[]"
+                                               class="<?php echo $key == 0 || $key == 1 ? 'required' : '' ?> input-flat"
+                                               value="<?php echo $option ?>" />
+                                    </div>
+                                </div>
+                                <?php
+                            endforeach;
+                        else : ?>
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <input type="text"
+                                           id="option1"
+                                           name="option[]"
+                                           class="input-flat"
+                                           placeholder="<?php echo __('Option'); ?>">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <input type="text"
+                                           id="option2"
+                                           name="option[]"
+                                           class="input-flat"
+                                           placeholder="<?php echo __('Option'); ?>">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <input type="text"
+                                           id="option3"
+                                           name="option[]"
+                                           class="input-flat"
+                                           placeholder="<?php echo __('Option'); ?>">
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <p class="btn color-blue" 
+                               onclick="field.addOption()"><?php echo __('Add an option'); ?></p>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<style>
+    ul.choose_type.list-group {
+        margin: 0;
+    }
+    .choose_type .list-group-item p {
+        margin: 0!important;
+    }
+    #choose_type .choose_type li {
+        filter: grayscale(100%);
+        -webkit-filter: grayscale(100%);
+    }
+
+    .form-scroll {
+        height: 530px;
+        overflow-y: scroll;
+    }
+</style>
+<script type="text/javascript">
+    $('#fieldFormSimple').off('submit');
+    $('#fieldFormSimple').on('submit', function (event) {
+        event.preventDefault();
+        var form = $(this);
+        if (form.valid() && $('#typeField').val() != '') {
+            formget(
+                form.attr('action'),
+                form.serialize(),
+                function (data) {
+                    if (data.success) {
+                        if ($('#field_' + data.field_id).attr('id')) {
+                            $('#field_' + data.field_id).replaceWith(data.field_html);
+                        } else {
+                            $('#section_fields_' + data.section_id).append(data.field_html);
+                        }
+                        field.processEvents();
+                        $.featherlight.current().close();
+                        iframe.f.reload();
+                    }
+                },
+                function () {},
+                true);
+        } else if ($('#typeField').val() == '') {
+            $('#typeFieldError').show();
+        }
+    })
+</script>

@@ -1,0 +1,15 @@
+<?php $message = $this->getCurrentMessage(); ?>
+<?php $message_is_mine = $this->getApplication()->getAdminId() == $message->getAuthorId() ?>
+<div class="form-group">
+    <div class="col-sm-12">
+        <div class="panel">
+            <div class="panel-heading border-blue">
+                <h3 class="panel-title <?php if($message_is_mine) echo "text-right"; ?>">
+                    <i class="fa fa-calendar"></i> <?php echo $message->getFormattedCreatedAt(); ?> - <i class="icon-user"></i> <?php echo $message_is_mine?$this->_("Me"):$message->getFirstname()." ".$message->getLastname(); ?></h3>
+            </div>
+            <div class="panel-body text-justify">
+                <?php echo $message->getMessage(); ?>
+            </div>
+        </div>
+    </div>
+</div>

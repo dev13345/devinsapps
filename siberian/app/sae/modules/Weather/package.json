@@ -1,0 +1,11 @@
+{
+  "name": "Weather",
+  "description": "",
+  "version": "4.12.19",
+  "dependencies": {
+    "system": {
+      "type": "SAE",
+      "version": "4.2.0"
+    }
+  }
+}

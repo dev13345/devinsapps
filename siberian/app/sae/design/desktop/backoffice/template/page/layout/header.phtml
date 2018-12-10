@@ -1,0 +1,429 @@
+<?php
+$notif_model = new Backoffice_Model_Notification();
+$unreadCount = $notif_model->findAll(["is_read = ?" => 0])->count();
+$customLinks = Siberian_Module::getMenus();
+$unreadDisplay = $unreadCount <= 0 ? "display: none;" : "";
+
+// format $customLinks
+$childs = [];
+foreach($customLinks as $module => $links) {
+    foreach ($links as $link) {
+        $childs[] = [
+            'hasChilds' => false,
+            'isVisible' => true,
+            'label' => $link['title'],
+            'url' => $this->getUrl($link['link']),
+            'icon' => !empty($link['icon']) ? $link['icon'] : 'fa fa-cogs',
+        ];
+    }
+}
+
+// Awesome menu
+$backofficeTree = [
+    'dashboard' => [
+        'hasChilds' => false,
+        'isVisible' => true,
+        'label' => __('Dashboard'),
+        'url' => $this->getUrl('backoffice'),
+        'icon' => 'fa fa-tachometer',
+    ],
+    'messages' => [
+        'hasChilds' => false,
+        'isVisible' => true,
+        'label' => __('Messages') . '&nbsp;<span id="unread_messages" class="message-badge" style="' .
+            $unreadDisplay . '">' . $unreadCount . '</span>',
+        'url' => $this->getUrl("backoffice/notif_list"),
+        'icon' => 'fa fa-envelope',
+    ],
+    'manage' => [
+        'hasChilds' => true,
+        'isVisible' => true,
+        'label' => __('Manage'),
+        'icon' => 'fa fa-users',
+        'childs' => [
+            'users' => [
+                'hasChilds' => true,
+                'isVisible' => true,
+                'label' => __('Editor access'),
+                'icon' => 'fa fa-users',
+                'childs' => [
+                    'users' => [
+                        'hasChilds' => false,
+                        'isVisible' => true,
+                        'label' => __('Users'),
+                        'url' => $this->getUrl("admin/backoffice_list"),
+                        'icon' => 'fa fa-users',
+                    ],
+                    'roles' => [
+                        'hasChilds' => false,
+                        'isVisible' => true,
+                        'label' => __('Roles'),
+                        'url' => $this->getUrl("acl/backoffice_role_list"),
+                        'icon' => 'fa fa-lock',
+                    ],
+                ],
+            ],
+            'backoffice' => [
+                'hasChilds' => true,
+                'isVisible' => true,
+                'label' => __('Backoffice access'),
+                'icon' => 'fa fa-lock',
+                'childs' => [
+                    'accounts' => [
+                        'hasChilds' => false,
+                        'isVisible' => true,
+                        'label' => __('Accounts'),
+                        'url' => $this->getUrl("backoffice/account_list"),
+                        'icon' => 'fa fa-users',
+                    ],
+                    'api' => [
+                        'hasChilds' => false,
+                        'isVisible' => true,
+                        'label' => __('API'),
+                        'url' => $this->getUrl("api/backoffice_user_list"),
+                        'icon' => 'fa fa-arrows-h',
+                    ],
+                ],
+            ],
+            'previewer' => [
+                'hasChilds' => true,
+                'isVisible' => $this->_canAccessPreviewer(),
+                'label' => __('Previewer'),
+                'icon' => 'fa fa-cog',
+                'childs' => [
+                    [
+                        'hasChilds' => false,
+                        'isVisible' => true,
+                        'label' => __('Modal'),
+                        'url' => $this->getUrl("previewer/backoffice_modal"),
+                        'icon' => 'fa fa-picture-o',
+                    ],
+                ],
+            ],
+            'application' => [
+                'hasChilds' => false,
+                'isVisible' => true,
+                'label' => $this->isSae() ?
+                    __('Application') : __('Applications'),
+                'url' => $this->isSae() ?
+                    $this->getUrl('application/backoffice_view') : $this->getUrl('application/backoffice_list'),
+                'icon' => 'fa fa-mobile',
+            ],
+            'templates' => [
+                'hasChilds' => false,
+                'isVisible' => true,
+                'label' => __('Templates'),
+                'url' => $this->getUrl('template/backoffice_category_list'),
+                'icon' => 'fa fa-th',
+            ],
+        ],
+    ],
+    'sales' => [
+        'hasChilds' => true,
+        'isVisible' => $this->isPe(),
+        'label' => __('Sales'),
+        'icon' => 'fa fa-dollar',
+        'childs' => [
+            'invoices' => [
+                'hasChilds' => false,
+                'isVisible' => $this->isPe(),
+                'label' => __('Invoices'),
+                'url' => $this->getUrl("sales/backoffice_invoice_list"),
+                'icon' => 'fa fa-ticket',
+            ],
+            'subscriptions' => [
+                'hasChilds' => false,
+                'isVisible' => $this->isPe(),
+                'label' => __('Subscriptions'),
+                'url' => $this->getUrl('subscription/backoffice_application_list'),
+                'icon' => 'fa fa-list-ul',
+            ],
+        ],
+    ],
+    'appearence' => [
+        'hasChilds' => true,
+        'isVisible' => true,
+        'label' => __('Appearance'),
+        'icon' => 'fa fa-pencil',
+        'childs' => [
+            'general' => [
+                'hasChilds' => false,
+                'isVisible' => true,
+                'label' => __('General'),
+                'url' => $this->getUrl("system/backoffice_config_design"),
+                'icon' => 'fa fa-home',
+            ],
+            'previews' => [
+                'hasChilds' => false,
+                'isVisible' => true,
+                'label' => __('Previews'),
+                'url' => $this->getUrl("preview/backoffice_list"),
+                'icon' => 'fa fa-desktop',
+            ],
+            'tour' => [
+                'hasChilds' => false,
+                'isVisible' => true,
+                'label' => __('Tour'),
+                'url' => $this->getUrl("backoffice/tour_settings"),
+                'icon' => 'fa fa-globe',
+            ],
+        ],
+    ],
+    'settings' => [
+        'hasChilds' => true,
+        'isVisible' => true,
+        'label' => __('Settings'),
+        'icon' => 'fa fa-wrench',
+        'childs' => [
+            'general' => [
+                'hasChilds' => false,
+                'isVisible' => true,
+                'label' => __('General'),
+                'url' => $this->getUrl("system/backoffice_config_general"),
+                'icon' => 'fa fa-home',
+            ],
+            'modules' => [
+                'hasChilds' => false,
+                'isVisible' => true,
+                'label' => __('Modules'),
+                'url' => $this->getUrl("installer/backoffice_module"),
+                'icon' => 'fa fa-cloud-download',
+            ],
+            'apis' => [
+                'hasChilds' => false,
+                'isVisible' => true,
+                'label' => __('APIs'),
+                'url' => $this->getUrl("api/backoffice_key_list"),
+                'icon' => 'fa fa-key',
+            ],
+            'push' => [
+                'hasChilds' => true,
+                'isVisible' => true,
+                'label' => __('Push'),
+                'icon' => 'fa fa-comment-o',
+                'childs' => [
+                    'configuration' => [
+                        'hasChilds' => false,
+                        'isVisible' => true,
+                        'label' => __('Configuration'),
+                        'url' => $this->getUrl("push/backoffice_certificate"),
+                        'icon' => 'fa fa-sliders',
+                    ],
+                    'global' => [
+                        'hasChilds' => false,
+                        'isVisible' => true,
+                        'label' => __('Global push'),
+                        'url' => $this->getUrl("push/backoffice_global"),
+                        'icon' => 'fa fa-globe',
+                    ],
+                ],
+            ],
+            'sales' => [
+                'hasChilds' => true,
+                'isVisible' => $this->isPe(),
+                'label' => __('Sales'),
+                'icon' => 'fa fa-money',
+                'childs' => [
+                    'configuration' => [
+                        'hasChilds' => false,
+                        'isVisible' => true,
+                        'label' => __('Configuration'),
+                        'url' => $this->getUrl("sales/backoffice_index/index"),
+                        'icon' => 'fa fa-toggle-on',
+                    ],
+                    'taxes' => [
+                        'hasChilds' => false,
+                        'isVisible' => true,
+                        'label' => __('Taxes'),
+                        'url' => $this->getUrl("tax/backoffice_list"),
+                        'icon' => 'fa fa-money',
+                    ],
+                    'plans' => [
+                        'hasChilds' => false,
+                        'isVisible' => true,
+                        'label' => __('Plans'),
+                        'url' => $this->getUrl("subscription/backoffice_list"),
+                        'icon' => 'fa fa-credit-card',
+                    ],
+                    'discounts' => [
+                        'hasChilds' => false,
+                        'isVisible' => $this->_canAccessDiscounts(),
+                        'label' => __('Discounts'),
+                        'url' => $this->getUrl("subscription/backoffice_discount_list"),
+                        'icon' => 'fa fa-ticket',
+                    ],
+                    'terms' => [
+                        'hasChilds' => false,
+                        'isVisible' => true,
+                        'label' => __("T&C's"),
+                        'url' => $this->getUrl("system/backoffice_config_tc"),
+                        'icon' => 'fa fa-file-text',
+                    ],
+                ],
+            ],
+            'advanced' => [
+                'hasChilds' => true,
+                'isVisible' => true,
+                'label' => __('Advanced'),
+                'icon' => 'fa fa-cogs',
+                'childs' => [
+                    'tools' => [
+                        'hasChilds' => false,
+                        'isVisible' => true,
+                        'label' => __('Tools'),
+                        'url' => $this->getUrl("backoffice/advanced_tools"),
+                        'icon' => 'fa fa-file-code-o',
+                    ],
+                    'cron' => [
+                        'hasChilds' => false,
+                        'isVisible' => true,
+                        'label' => __('Cron'),
+                        'url' => $this->getUrl("backoffice/advanced_cron"),
+                        'icon' => 'fa fa-clock-o',
+                    ],
+                    'firewall' => [
+                        'hasChilds' => false,
+                        'isVisible' => true,
+                        'label' => __('Firewall'),
+                        'url' => $this->getUrl("firewall/index"),
+                        'icon' => 'icofont icofont-ui-fire-wall',
+                    ],
+                    'mail-log' => [
+                        'hasChilds' => false,
+                        'isVisible' => true,
+                        'label' => __('Mail logs'),
+                        'url' => $this->getUrl("mail/backoffice_log"),
+                        'icon' => 'fa fa-envelope',
+                    ],
+                    'modules' => [
+                        'hasChilds' => false,
+                        'isVisible' => true,
+                        'label' => __('Modules'),
+                        'url' => $this->getUrl("backoffice/advanced_module"),
+                        'icon' => 'fa fa-sliders',
+                    ],
+                    'whitelabels' => [
+                        'hasChilds' => false,
+                        'isVisible' => $this->isPe(),
+                        'label' => __('Whitelabels'),
+                        'url' => $this->getUrl("backoffice/advanced_whitelabel"),
+                        'icon' => 'fa fa-tag',
+                    ],
+                    'configuration' => [
+                        'hasChilds' => false,
+                        'isVisible' => true,
+                        'label' => __("Configuration"),
+                        'url' => $this->getUrl("backoffice/advanced_configuration"),
+                        'icon' => 'fa fa-toggle-on',
+                    ],
+                ],
+            ],
+            'communication' => [
+                'hasChilds' => false,
+                'isVisible' => true,
+                'label' => __('Communication'),
+                'url' => $this->getUrl("system/backoffice_config_email"),
+                'icon' => 'fa fa-exchange',
+            ],
+            'translations' => [
+                'hasChilds' => false,
+                'isVisible' => true,
+                'label' => __('Translations'),
+                'url' => $this->getUrl("translation/backoffice_list"),
+                'icon' => 'fa fa-language',
+            ],
+        ],
+    ],
+    'logout' => [
+        'hasChilds' => false,
+        'isVisible' => true,
+        'label' => __('Log-out'),
+        'url' => false,
+        'ngOptions' => [
+            'ng-click' => 'logout()',
+        ],
+        'icon' => 'fa fa-power-off',
+    ],
+];
+
+if (!empty($childs)) {
+    $backofficeTree['manage']['childs']['modules'] = [
+        'hasChilds' => true,
+        'isVisible' => true,
+        'label' => __('Modules'),
+        'icon' => 'fa fa-cog',
+        'childs' => $childs,
+    ];
+}
+
+$backofficeTree = \Siberian\Hook::trigger('backoffice.menu.ready', $backofficeTree);
+
+/**
+ * @param $markup
+ * @param $menus
+ * @param int $level
+ * @return string
+ */
+function renderRecursive($markup, $menus, $level = 2) {
+    foreach ($menus as $menu) {
+        if (!$menu['isVisible']) {
+            continue;
+        }
+
+        if ($menu['hasChilds']) {
+            $childs = '<ul class="l' . $level . '">' .
+                renderRecursive('', $menu['childs'], $level + 1) . '</ul>';
+
+            $extra = array_key_exists('extra', $menu) ? $menu['extra'] : '';
+            $markup .= '
+                <li class="has_submenu">
+                    <a href="#">
+                        <i class="' . $menu['icon'] . '"></i>' . $menu['label'] . $extra . '
+                    </a> ' .
+                    $childs . '
+                </li>';
+        } else {
+            $extra = array_key_exists('extra', $menu) ? $menu['extra'] : '';
+            $aMarkup = '<a href="' . $menu['url'] . '">';
+            if ($menu['url'] === false) {
+                $ngOptions = '';
+                foreach ($menu['ngOptions'] as $key => $value) {
+                    $ngOptions .= "$key=\"$value\" ";
+                }
+                $aMarkup = '<a href="javascript:void(0);" ' . $ngOptions . '>';
+            }
+            $markup .= '
+                <li>
+                    ' . $aMarkup . '
+                        <i class="' . $menu['icon'] . '"></i>' . $menu['label'] . $extra . '
+                    </a>
+                </li>';
+        }
+    }
+    return $markup;
+}
+
+$outputHtml = renderRecursive('', $backofficeTree, 2);
+
+?>
+<div class="content">
+    <div class="logo left">
+        <a href="<?php echo $this->getUrl(''); ?>"
+           ng-click="$event.stopPropagation()">
+            <img src="<?php echo $this->getLogo(); ?>"
+                 id="logo"
+                 alt="Mobile Company"
+                 title="Mobile Company"
+                 style="max-width: 151px; max-height: 50px;"/>
+        </a>
+    </div>
+    <div id="backoffice_menu"
+         class="menu backoffice_menu slide-down"
+         ng-if="isLoggedIn"
+         ng-class="{none: !isLoggedIn}">
+        <ul class="l1">
+            <?php echo $outputHtml; ?>
+        </ul>
+    </div>
+    <div class="clear"></div>
+</div>

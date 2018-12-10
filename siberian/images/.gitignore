@@ -1,0 +1,11 @@
+# Defaults
+!.gitignore
+previewer
+customer/
+site/
+!assets/
+application/*
+!application/placeholder
+!application/tabbar
+admin/white_label/*
+

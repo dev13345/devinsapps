@@ -1,0 +1,87 @@
+<?php
+$email = __get('support_email');
+$supportLink = __get('support_link');
+?>
+
+<p>
+    <?php echo __("Thanks for working with us!"); ?>
+</p>
+<p style="text-align: justify;">
+    <?php echo __("You are going to love it!<br />Thanks to our effective features, you will be able to create great mobile apps in your name, within minutes."); ?>
+</p>
+<?php if (!empty($email)) : ?>
+<p>
+    <?php echo __("Do not hesitate to give us your feedback by sharing your needs:"); ?><br />
+    <?php echo __("Email:"); ?> <a href="mailto:<?php echo $email; ?>"><?php echo $email; ?></a>
+</p>
+<?php endif; ?>
+
+<p align="justify">
+    <span>
+        <?php echo __("Login:"); ?> <?php echo $this->getAdmin()->getEmail() ?><br />
+        <?php echo __("Password:"); ?> <strong>**********</strong>
+    </span>
+</p>
+<p>
+    <?php echo __("Ready to create your own apps?"); ?>
+</p>
+<table border="0"
+       cellpadding="0"
+       cellspacing="0"
+       class="btn btn-primary">
+    <tbody>
+    <tr>
+        <td align="left">
+            <table border="0"
+                   cellpadding="0"
+                   cellspacing="0">
+                <tbody>
+                <tr>
+                    <td>
+                        <a href="<?php echo $this->getUrl('admin/application/list'); ?>"
+                           target="_blank">
+                            <?php echo __("Log in") ?>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<?php if (!empty($supportLink)) : ?>
+<p>
+    <?php echo __("Need some help?"); ?><br />
+    <?php echo __("Check out our support pages:"); ?>
+</p>
+<table border="0"
+       cellpadding="0"
+       cellspacing="0"
+       class="btn btn-primary">
+    <tbody>
+    <tr>
+        <td align="left">
+            <table border="0"
+                   cellpadding="0"
+                   cellspacing="0">
+                <tbody>
+                <tr>
+                    <td>
+                        <a href="<?php echo $supportLink; ?>"
+                           target="_blank">
+                            <?php echo __("Support") ?>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<?php endif; ?>
+<p>
+    <?php echo __("Enjoy!"); ?><br />
+    <?php echo __("The Support Team"); ?><br />
+</p>

@@ -1,0 +1,16 @@
+/** WordPress 2 */
+.module-wordpress2 {
+  .post-content {
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+    p {
+      margin-bottom: 1em;
+    }
+    iframe {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+}

@@ -1,0 +1,143 @@
+<?php
+
+$application = $this->getApplication();
+$upload_path = Application_Model_Application::getImagePath().'/homepage_image/';
+
+?>
+
+<div class="feature-block-add">
+    <h3 class="title-editor no-border-radius title-feature-indent"><?php echo __('Upgrade required') ?></h3>
+</div>
+<div class="container-fluid first-row-feature content-feature">
+    <div class="alert alert-info">
+        <?php echo __('Before you can re-publish your application, you must upgrade it to the new <b>unified</b> homepage & splashscreen.') ?>
+        <hr />
+        <?php echo __('After the upgrade you will be required to upload new homepage & splashscreen, actual homepages & splashscreens can still be downloaded.') ?>
+
+        <br />
+        <br />
+        <p style="text-align: center;">
+            <button class="btn color-green upgrade-button"><i class="fa fa-bolt"></i>&nbsp;<?php echo __('UPGRADE NOW!') ?></button>
+            &nbsp;
+            &nbsp;
+            <?php echo __('OR') ?>
+            &nbsp;
+            &nbsp;
+            <a href="/application/customization_design_style/downloadhomepage"
+               class="btn color-red download-homepage"><i class="fa fa-image"></i>&nbsp;<?php echo __('Download non-unified previous images!') ?></a>
+        </p>
+    </div>
+</div>
+
+<br />
+
+<div class="feature-block-add">
+    <h3 class="title-editor no-border-radius title-feature-indent"><?php echo __('Portrait') ?></h3>
+</div>
+<div class="container-fluid first-row-feature content-feature">
+    <div class="row">
+        <div id="sb-tour-hp-1"
+             class="col-lg-4 col-sm-4 col-xs-4 sb-tour">
+            <img id="homepage_standard"
+                 width="100%"
+                 src="<?php echo $application->getHomepageBackgroundImageUrl() ?>"
+                 class="upload_bg bg pointer"
+                 rel="bg"/>
+        </div>
+        <div id="sb-tour-hp-2"
+             class="col-md-4 col-sm-4 col-xs-4 sb-tour">
+            <img id="homepage_hd"
+                 width="100%"
+                 src="<?php echo $application->getHomepageBackgroundImageUrl('hd') ?>"
+                 class="upload_bg bg_hd pointer"
+                 rel="bg_hd"/>
+        </div>
+        <div id="sb-tour-hp-3"
+             class="col-md-4 col-sm-4 col-xs-4 sb-tour">
+            <img id="homepage_tablet"
+                 width="100%"
+                 src="<?php echo $application->getHomepageBackgroundImageUrl('tablet') ?>"
+                 class="upload_bg bg_tablet pointer"
+                 rel="bg_tablet"/>
+        </div>
+    </div>
+</div>
+
+<br />
+
+<div class="feature-block-add">
+    <h3 class="title-editor no-border-radius title-feature-indent"><?php echo __('Landscape') ?></h3>
+</div>
+
+<?php
+    $bg_landscape = $application->getHomepageBackgroundImageUrl('landscape');
+    $bg_landscape_hd = $application->getHomepageBackgroundImageUrl('landscape_hd');
+    $bg_landscape_tablet = $application->getHomepageBackgroundImageUrl('landscape_tablet');
+?>
+
+<div class="container-fluid first-row-feature content-feature">
+    <br />
+    <div class="row">
+        <div id="sb-tour-hp-4"
+             class="col-lg-4 col-sm-4 col-xs-4 sb-tour">
+            <img id="homepage_landscape_standard"
+                 width="100%"
+                 src="<?php echo $bg_landscape ?>"
+                 class="upload_bg landscape_bg pointer"
+                 rel="bg" />
+        </div>
+        <div id="sb-tour-hp-5"
+             class="col-md-4 col-sm-4 col-xs-4 sb-tour">
+            <img id="homepage_landscape_hd"
+                 width="100%"
+                 src="<?php echo $bg_landscape_hd ?>"
+                 class="upload_bg landscape_bg_hd pointer"
+                 rel="bg_hd" />
+        </div>
+        <div id="sb-tour-hp-6"
+             class="col-md-4 col-sm-4 col-xs-4 sb-tour">
+            <img id="homepage_landscape_tablet"
+                 width="100%"
+                 src="<?php echo $bg_landscape_tablet ?>"
+                 class="upload_bg landscape_bg_tablet pointer"
+                 rel="bg_tablet" />
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div id="col-md-12">
+        <div id="capture_conteneurs">
+            <div class="left" id="crop_image_bg_cont"></div>
+        </div>
+    </div>
+</div>
+<style type="text/css">
+    .upload-landscape-placeholder {
+        width: 100%;
+        text-align: center;
+        padding: 60px 0;
+        border: 1px solid grey;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+</style>
+<script type="text/javascript">
+
+    $(document).ready(function() {
+        // Bind migration button!
+
+        var upgradeButton = $('.upgrade-button');
+
+        upgradeButton.off('click');
+        upgradeButton.on('click', function () {
+            formget(
+                '/application/customization_design_style/upgradeunified',
+                {},
+                function () {
+                    setTimeout(function () {
+                        location.reload();
+                    }, 100);
+                });
+        });
+    });
+</script>

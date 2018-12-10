@@ -1,0 +1,11 @@
+{
+  "name": "Wordpress",
+  "description": "",
+  "version": "4.13.14",
+  "dependencies": {
+    "system": {
+      "type": "SAE",
+      "version": "4.2.0"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "name": "Cron",
+  "description": "",
+  "version": "4.14.0",
+  "dependencies": {
+    "system": {
+      "type": "SAE",
+      "version": "4.7.7"
+    }
+  }
+}

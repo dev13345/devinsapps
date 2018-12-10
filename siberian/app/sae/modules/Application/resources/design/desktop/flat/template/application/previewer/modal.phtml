@@ -1,0 +1,52 @@
+<?php
+$urlPreviewer = $this->getUrl(
+    'application/device/check',
+    [
+        'app_id' => 'previewer',
+        'language_code' => Core_Model_Language::DEFAULT_LANGUAGE
+    ]
+);
+
+$urlQrCode = $this->getUrl(
+    'promotion/application/generateqrcode',
+    [
+        'size' => 200,
+        'margin' => 12,
+        'base64' => 1,
+        'code' => base64_encode($urlPreviewer)
+    ]
+);
+
+$previewer = Previewer_Model_Previewer::getInstance();
+?>
+<div class="previewer container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <?php echo $previewer->getModalText1(); ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 first-row-feature">
+            <p><?php echo __('Scan this QR Code:'); ?></p>
+            <p>
+                <img src="<?php echo $urlQrCode; ?>"
+                     title="<?php echo __('Scan this QR Code'); ?>" />
+            </p>
+        </div>
+        <?php if($modalImage = $previewer->getModalImageUrl()) : ?>
+            <div class="col-md-8 text-center first-row-feature hidden-xs hidd
+            en-sm">
+                <img id="modal_image"
+                     src="<?php echo $modalImage ?>"
+                     title="<?php echo __('Download our app previewer'); ?>"
+                     alt="<?php echo __('Download our app previewer'); ?>"
+                     style="max-width:400px"/>
+            </div>
+        <?php endif; ?>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <?php echo $previewer->getModalText2(); ?>
+        </div>
+    </div>
+</div>

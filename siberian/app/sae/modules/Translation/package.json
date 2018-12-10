@@ -1,0 +1,11 @@
+{
+  "name": "Translation",
+  "description": "",
+  "version": "4.13.12",
+  "dependencies": {
+    "system": {
+      "type": "SAE",
+      "version": "4.12.21"
+    }
+  }
+}

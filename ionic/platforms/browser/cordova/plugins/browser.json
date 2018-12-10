@@ -1,0 +1,30 @@
+{
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {}
+  },
+  "installed_plugins": {
+    "Promises": {
+      "PACKAGE_NAME": "com.appsmobilecompany.base"
+    },
+    "BarcodeScanner": {
+      "PACKAGE_NAME": "com.appsmobilecompany.base"
+    },
+    "Camera": {
+      "PACKAGE_NAME": "com.appsmobilecompany.base"
+    },
+    "Device": {
+      "PACKAGE_NAME": "com.appsmobilecompany.base"
+    },
+    "File": {
+      "PACKAGE_NAME": "com.appsmobilecompany.base"
+    },
+    "InAppBrowser": {
+      "PACKAGE_NAME": "com.appsmobilecompany.base"
+    }
+  },
+  "dependent_plugins": {}
+}

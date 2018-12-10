@@ -1,0 +1,130 @@
+{
+  "platforms": {
+    "Android": {
+      "git": "git@github.com:Xtraball/cordova-android.git",
+      "branch": "siberian"
+    },
+    "Browser": {
+      "git": "git@github.com:Xtraball/cordova-browser.git",
+      "branch": "siberian"
+    },
+    "Ios": {
+      "git": "git@github.com:Xtraball/cordova-ios.git",
+      "branch": "siberian"
+    }
+  },
+  "plugins": {
+    "AdmobPro": {
+      "git": "git@github.com:Xtraball/cordova-admob-pro.git",
+      "branch": "siberian"
+    },
+    "AppEvent": {
+      "git": "git@github.com:Xtraball/cordova-plugin-app-event.git",
+      "branch": "siberian"
+    },
+    "AppVersion": {
+      "git": "git@github.com:Xtraball/cordova-plugin-app-version.git",
+      "branch": "siberian"
+    },
+    "BarcodeScanner": {
+      "git": "git@github.com:Xtraball/phonegap-plugin-barcodescanner.git",
+      "branch": "siberian"
+    },
+    "BrowserTab": {
+      "git": "git@github.com:Xtraball/BrowserTab.git",
+      "branch": "siberian"
+    },
+    "Camera": {
+      "git": "git@github.com:Xtraball/cordova-plugin-camera.git",
+      "branch": "siberian"
+    },
+    "Chcp": {
+      "git": "git@github.com:Xtraball/cordova-hot-code-push.git",
+      "branch": "siberian"
+    },
+    "Clipboard": {
+      "git": "git@github.com:Xtraball/cordova-clipboard.git",
+      "branch": "siberian"
+    },
+    "Console": {
+      "git": "git@github.com:Xtraball/cordova-plugin-console.git",
+      "branch": "siberian"
+    },
+    "Device": {
+      "git": "git@github.com:Xtraball/cordova-plugin-device.git",
+      "branch": "siberian"
+    },
+    "Extension": {
+      "git": "git@github.com:Xtraball/cordova-extension.git",
+      "branch": "siberian"
+    },
+    "File": {
+      "git": "git@github.com:Xtraball/cordova-plugin-file.git",
+      "branch": "siberian"
+    },
+    "Geofence": {
+      "git": "git@github.com:Xtraball/cordova-plugin-geofence.git",
+      "branch": "siberian"
+    },
+    "Geolocation": {
+      "git": "git@github.com:Xtraball/cordova-plugin-geolocation.git",
+      "branch": "siberian"
+    },
+    "InAppBrowser": {
+      "git": "git@github.com:Xtraball/cordova-plugin-inappbrowser.git",
+      "branch": "siberian"
+    },
+    "Insomnia": {
+      "git": "git@github.com:Xtraball/cordova-plugin-insomnia.git",
+      "branch": "siberian"
+    },
+    "Keyboard": {
+      "git": "git@github.com:Xtraball/ionic-plugin-keyboard.git",
+      "branch": "siberian"
+    },
+    "LocalNotification": {
+      "git": "git@github.com:Xtraball/cordova-plugin-local-notifications.git",
+      "branch": "siberian"
+    },
+    "MusicControls": {
+      "git": "git@github.com:Xtraball/cordova-music-controls-plugin.git",
+      "branch": "siberian"
+    },
+    "OfflineMode": {
+      "git": "git@github.com:Xtraball/siberian-plugin-offlinemode.git",
+      "branch": "siberian"
+    },
+    "Promises": {
+      "git": "git@github.com:Xtraball/PromisesPlugin.git",
+      "branch": "siberian"
+    },
+    "Push": {
+      "git": "git@github.com:Xtraball/siberian-plugin-push.git",
+      "branch": "siberian"
+    },
+    "Siberian": {
+      "git": "git@github.com:Xtraball/cordova-plugin-siberian.git",
+      "branch": "siberian"
+    },
+    "SocialSharing": {
+      "git": "git@github.com:Xtraball/cordova-plugin-socialsharing.git",
+      "branch": "siberian"
+    },
+    "SplashScreen": {
+      "git": "git@github.com:Xtraball/cordova-plugin-splashscreen.git",
+      "branch": "siberian"
+    },
+    "StatusBar": {
+      "git": "git@github.com:Xtraball/cordova-plugin-statusbar.git",
+      "branch": "siberian"
+    },
+    "Whitelist": {
+      "git": "git@github.com:Xtraball/cordova-plugin-whitelist.git",
+      "branch": "siberian"
+    },
+    "WebView": {
+      "git": "git@github.com:Xtraball/cordova-second-webview.git",
+      "branch": "siberian"
+    }
+  }
+}

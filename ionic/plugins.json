@@ -1,0 +1,132 @@
+{
+  "default": {
+    "Promises": {
+      "version": "latest",
+      "variables": {}
+    },
+    "AdmobPro": {
+      "version": "latest",
+      "variables": {}
+    },
+    "AppVersion": {
+      "version": "latest",
+      "variables": {}
+    },
+    "AppEvent": {
+      "version": "latest",
+      "variables": {}
+    },
+    "BarcodeScanner": {
+      "version": "latest",
+      "variables": {}
+    },
+    "Camera": {
+      "version": "~2.1.0",
+      "variables": {}
+    },
+    "Clipboard": {
+      "version": "latest",
+      "variables": {}
+    },
+    "Device": {
+      "version": "~1.1.1",
+      "variables": {}
+    },
+    "File": {
+      "version": "latest",
+      "variables": {}
+    },
+    "Geofence": {
+      "version": "latest",
+      "variables": {}
+    },
+    "Geolocation": {
+      "version": "latest",
+      "variables": {}
+    },
+    "InAppBrowser": {
+      "version": "~1.2.0",
+      "variables": {}
+    },
+    "Keyboard": {
+      "version": "latest",
+      "variables": {}
+    },
+    "SocialSharing": {
+      "version": "latest",
+      "variables": {}
+    },
+    "StatusBar": {
+      "version": "~2.1.0",
+      "variables": {}
+    },
+    "WhiteList": {
+      "version": "~1.2.1",
+      "variables": {}
+    },
+    "LocalNotification": {
+      "version": "latest",
+      "variables": {}
+    },
+    "OfflineMode": {
+      "version": "latest",
+      "variables": {}
+    },
+    "Insomnia": {
+      "version": "latest",
+      "variables": {}
+    },
+    "MusicControls": {
+      "version": "latest",
+      "variables": {}
+    },
+    "Siberian": {
+      "version": "latest",
+      "variables": {}
+    }
+  },
+  "ios": {
+    "Chcp": {
+      "version": "latest"
+    },
+    "SplashScreen": {
+      "version": "latest",
+      "variables": {}
+    },
+    "Push": {
+      "version": "latest",
+      "variables": {
+        "SENDER_ID": "01234567890"
+      }
+    },
+    "WebView": {
+      "version": "latest",
+      "variables": {}
+    }
+  },
+  "android": {
+    "Extension": {
+      "version": "latest",
+      "variables": {}
+    },
+    "Chcp": {
+      "version": "latest"
+    },
+    "SplashScreen": {
+      "version": "latest",
+      "variables": {}
+    },
+    "Push": {
+      "version": "latest",
+      "variables": {
+        "SENDER_ID": "01234567890"
+      }
+    },
+    "WebView": {
+      "version": "latest",
+      "variables": {}
+    }
+  },
+  "browser": {
+  }
+}

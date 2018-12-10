@@ -1,0 +1,6 @@
+<?php if ($this->getApkStatus()) : ?>
+    <p style="font-family: Verdana; font-weight: bold;color: #404040;font-size:18px; line-height:150%;"><?php echo __("The APK has been generated!"); ?></p>
+    <a href="<?php echo $this->getLink() ?>"><?php echo __('Download the APK') ?></a>
+<?php else : ?>
+    <p style="font-family: Verdana; font-weight: bold;color: #404040;font-size:18px; line-height:150%;"><?php echo __("An error occurred when generating the apk"); ?></p>
+<?php endif; ?>
